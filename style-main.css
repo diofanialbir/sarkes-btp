@@ -28,7 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top left, #ffdd9b 0%, #eebbc4 30%, #7f99da 100%);
+   background: radial-gradient(circle at top left, #8a8a8a 0%, #4e383b 30%, #000136 100%);
   color: var(--text-main);
 }
 
@@ -45,7 +45,7 @@ h1, h2, h3 {
    HEADER
 ============================== */
 header.topbar {
-  background: radial-gradient(circle at 10% -20%, #60a5fa 0, #1e3a8a 40%, #020617 100%);
+    background: radial-gradient(circle at top left, #ffdd9b 0%, #ff8fa2 30%, #0047ff 100%);
   color: #fff;
   padding: 40px 24px 52px;
   text-align: center;
@@ -177,7 +177,7 @@ main.content::before {
    INTRO SECTION
 ============================== */
 .intro-section {
-  background: linear-gradient(20deg, #fdcf89 20%, #005cfc 100%, #003cff 400%);
+    background: radial-gradient(circle at top left, #ffdd9b 0%, #ff8fa2 30%, #0047ff 100%);
   padding: 22px 24px 24px;
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.4);
@@ -222,7 +222,7 @@ main.content::before {
 /* KARTU UNTUK MASING-MASING KOLOM */
 .tasks-section {
   flex: 1;
-  background: linear-gradient(20deg, #fdcf89 20%, #005cfc 100%, #003cff 400%);
+    background: radial-gradient(circle at top left, #ffdd9b 0%, #ff8fa2 30%, #0047ff 100%);
   padding: 22px 22px 24px;
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
@@ -363,41 +363,103 @@ main.content::before {
 /* ==============================
    RESPONSIVE
 ============================== */
+/* RESPONSIVE - TABLET & MOBILE */
 @media (max-width: 768px) {
+  header.topbar {
+    padding: 28px 18px 36px; /* Kurangi padding */
+  }
+  
   .topbar-title h1 {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
+    line-height: 1.1;
   }
-
+  
   .topbar-title p {
-    font-size: 0.98rem;
+    font-size: 1rem;
+    padding: 0 8px; /* Hindari text overflow */
   }
-
+  
   main.content {
-    margin: 18px auto 46px;
-    padding-bottom: 30px;
+    margin: 20px auto 40px;
+    padding: 0 12px 32px;
+    gap: 18px;
   }
-
+  
   .tasks-two-columns {
-    flex-direction: column;      /* di HP: jadi atas–bawah */
+    flex-direction: column;
+    gap: 20px;
   }
-
-  .tasks-section {
-    padding: 18px 18px 22px;
+  
+  .tasks-section,
+  .intro-section {
+    padding: 20px 20px 22px; /* Padding sentuh-friendly */
   }
-
+  
   .task-card {
-    font-size: 0.95rem;
-    padding: 13px 14px;
+    padding: 18px 16px; /* Minimal 44px height untuk touch */
+    font-size: 1rem;
+    min-height: 52px; /* Ukuran sentuh standar */
+    gap: 14px;
+  }
+  
+  .task-card::after {
+    font-size: 1.4rem;
   }
 }
 
+/* MOBILE KECIL */
 @media (max-width: 480px) {
-  .intro-section,
-  .tasks-section {
-    padding: 16px 14px 18px;
+  html, body {
+    overflow-x: hidden; /* Cegah horizontal scroll */
   }
-
+  
+  header.topbar {
+    padding: 24px 16px 32px;
+  }
+  
+  header.topbar::after {
+    width: 180px;
+    height: 180px;
+    top: -80px;
+    right: -20px;
+  }
+  
   .topbar-title h1 {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
+    padding: 0 4px;
+  }
+  
+  .topbar-title p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  main.content {
+    margin: 16px auto 32px;
+    padding: 0 10px 28px;
+  }
+  
+  .tasks-section,
+  .intro-section {
+    padding: 18px 16px 20px;
+    border-radius: 16px; /* Radius lebih kecil */
+  }
+  
+  .task-card {
+    padding: 16px 14px;
+    font-size: 0.98rem;
+    border-radius: 14px;
+    min-height: 48px;
+  }
+  
+  .tasks-list {
+    gap: 14px;
+  }
+}
+/* SAFE AREA MOBILE */
+@supports (padding: max(0px)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

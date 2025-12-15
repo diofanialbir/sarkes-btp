@@ -36,8 +36,7 @@ body::before {
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {
@@ -53,6 +52,9 @@ body::before {
   min-height: 100vh;
   padding: 32px clamp(20px, 5vw, 64px);
   gap: 32px;
+  max-width: 1280px;      /* supaya konten tidak melebar berantakan */
+  margin: 0 auto;         /* center di layar besar */
+  animation: fadeInUp 0.7s ease-out;
 }
 
 /* Judul di tengah */
@@ -80,9 +82,28 @@ body::before {
 .daftar-dasar-hukum {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 kolom fix */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* tetap 2 kolom */
   gap: 24px;
 }
+
+/* animasi masuk kartu, tapi tidak mengubah ukuran/posisi grid */
+.daftar-dasar-hukum > .card-hukum {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: cardIn 0.6s ease-out forwards;
+}
+
+.daftar-dasar-hukum > .card-hukum:nth-child(2) { animation-delay: 0.08s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(3) { animation-delay: 0.16s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(4) { animation-delay: 0.24s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(5) { animation-delay: 0.32s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(6) { animation-delay: 0.40s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(7) { animation-delay: 0.48s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(8) { animation-delay: 0.56s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(9) { animation-delay: 0.64s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(10) { animation-delay: 0.72s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(11) { animation-delay: 0.80s; }
+.daftar-dasar-hukum > .card-hukum:nth-child(12) { animation-delay: 0.88s; }
 
 /* ===== CARD HITAM ===== */
 
@@ -96,7 +117,7 @@ body::before {
   position: relative;
   overflow: hidden;
   outline: none;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* dekorasi lembut */
@@ -109,11 +130,18 @@ body::before {
   top: -40px;
   right: -30px;
   opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .card-hukum:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.01);
   box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
+}
+
+.card-hukum:hover::before {
+  opacity: 0.8;
+  transform: translate(-6px, 4px) scale(1.05);
 }
 
 .card-hukum:focus-visible {
@@ -127,16 +155,12 @@ body::before {
   font-size: 0.98rem;
   font-weight: 600;
   margin-bottom: 4px;
-  position: relative;
-  z-index: 1;
 }
 
 .kode-singkat {
   font-size: 0.82rem;
   color: #cbd5f5;
   opacity: 0.9;
-  position: relative;
-  z-index: 1;
 }
 
 /* ===== TOMBOL BUKA DI POJOK ===== */
@@ -167,6 +191,22 @@ body::before {
   filter: brightness(1.05);
 }
 
+.btn-ikon:active {
+  transform: translateY(0);
+}
+
+/* ===== KEYFRAMES ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 900px) {
@@ -188,5 +228,102 @@ body::before {
   .card-hukum {
     border-radius: 14px;
     padding: 14px 14px 12px;
+  }
+}
+/* TABLET */
+@media (max-width: 900px) {
+  .layout {
+    padding: 24px clamp(16px, 4vw, 32px);
+    gap: 22px;
+  }
+  
+  .daftar-dasar-hukum {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  
+  .judul-tugas {
+    font-size: clamp(2.2rem, 6vw, 2.8rem);
+  }
+}
+
+/* MOBILE BESAR */
+@media (max-width: 768px) {
+  body {
+    padding-top: 10px; /* Safe area notch */
+  }
+  
+  .layout {
+    padding: 20px 16px 32px;
+    gap: 20px;
+    max-width: 100%;
+  }
+  
+  .daftar-dasar-hukum {
+    grid-template-columns: 1fr; /* 1 kolom full width */
+    gap: 18px;
+  }
+  
+  .card-hukum {
+    padding: 20px 18px 16px; /* Touch-friendly padding */
+    min-height: 72px; /* Minimal touch area */
+  }
+  
+  .btn-ikon {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 80px;
+    min-height: 40px; /* Touch target 44px+ */
+  }
+}
+
+/* MOBILE KECIL */
+@media (max-width: 480px) {
+  .layout {
+    padding: 16px 12px 28px;
+  }
+  
+  .header-tugas {
+    padding-bottom: 12px;
+  }
+  
+  .label-kecil {
+    font-size: 0.8rem;
+  }
+  
+  .judul-tugas {
+    font-size: clamp(1.9rem, 8vw, 2.4rem);
+    line-height: 1.1;
+    padding: 0 4px;
+  }
+  
+  .card-hukum {
+    padding: 18px 16px 14px;
+    border-radius: 14px;
+    gap: 12px;
+  }
+  
+  .uu {
+    font-size: 1rem;
+  }
+  
+  .kode-singkat {
+    font-size: 0.88rem;
+  }
+  
+  .btn-ikon {
+    position: static; /* Pindah ke bawah di mobile kecil */
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Hilangkan efek berat di mobile kecil */
+  body::before {
+    opacity: 0.6;
+  }
+  
+  .card-hukum::before {
+    display: none;
   }
 }

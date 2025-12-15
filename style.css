@@ -50,7 +50,7 @@
   height: 100%;
   object-fit: cover;
   z-index: -1;
-  opacity: 0.75;            /* sedikit lebih lembut */
+  opacity: 0.55;            /* sedikit lebih lembut */
 }
 
 /* BODY & BACKGROUND LAYER */
@@ -204,33 +204,6 @@ body::before {
   box-shadow: 0 15px 35px rgba(74, 144, 226, 0.6);
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .logo-top-right {
-    height: 64px;
-  }
-
-  .title {
-     font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
-     font-weight: 700;
-    margin-bottom: 2rem;
-    padding: 0 0.5rem;
-    font-size: clamp(2.3rem, 7vw, 3rem);
-  }
-
-  .start-btn {
-    padding: 1.1rem 2.4rem;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .start-icon {
-    font-size: 1.6rem;
-    width: 2.1rem;
-    height: 2.1rem;
-  }
-}
-
 /* PULSE EFFECT */
 .pulse {
   animation: pulse 2s infinite;
@@ -245,5 +218,58 @@ body::before {
   }
   100% {
     box-shadow: 0 0 0 20px rgba(74, 144, 226, 0);
+  }
+}
+@media (max-width: 768px) {
+  /* Logo hilang atau kecil di mobile */
+  .logo-wrapper {
+    display: none; /* Sembunyikan logo fixed di mobile */
+  }
+  
+  /* Video background lebih ringan */
+  .bg-video {
+    opacity: 0.4;
+  }
+  
+  body {
+    padding: 1rem; /* Tambah padding body */
+    overflow-x: hidden; /* Cegah scroll horizontal */
+  }
+  
+  .title {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 8vw, 2.8rem); /* Lebih kecil */
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    line-height: 1.1;
+  }
+  
+  .start-btn {
+    padding: 1rem 2rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    flex-direction: row; /* Jaga horizontal, bukan column */
+    gap: 0.5rem;
+    min-height: 50px; /* Ukuran sentuh minimal */
+  }
+  
+  .start-icon {
+    font-size: 1.4rem;
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .container {
+    padding: 1rem;
+    max-width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  body::before {
+    display: none; /* Hilangkan efek floating particles di mobile kecil */
+  }
+  
+  .title {
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.4); /* Stroke lebih tipis */
   }
 }
